@@ -30,6 +30,11 @@ trait TokenEntityTrait
     protected $userIdentifier;
 
     /**
+     * @var string|null
+     */
+    protected $fullName;
+
+    /**
      * @var ClientEntityInterface
      */
     protected $client;
@@ -92,6 +97,21 @@ trait TokenEntityTrait
     public function getUserIdentifier()
     {
         return $this->userIdentifier;
+    }
+
+    /**
+     * @param string|null $fullName
+     * @return void
+     */
+    public function setUserFullName(?string $fullName) {
+        $this->fullName = $fullName;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUserFullName(): ?string {
+        return $this->fullName;
     }
 
     /**

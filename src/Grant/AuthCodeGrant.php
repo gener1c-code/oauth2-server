@@ -163,8 +163,12 @@ class AuthCodeGrant extends AbstractAuthorizeGrant
             }
         }
 
+        if (!isset($authCodePayload->user_name)) {
+            $authCodePayload->user_name = null;
+        }
+
         // Issue and persist access + refresh tokens
-        $accessToken = $this->issueAccessToken($accessTokenTTL, $client, $authCodePayload->user_id, $scopes);
+        $accessToken = $this->issueAccessToken($accessTokenTTL, $client, $authCodePayload->user_id, $scopes, $authCodePayload->user_name);
         $refreshToken = $this->issueRefreshToken($accessToken);
 
         // Inject tokens into response type
@@ -322,6 +326,7 @@ class AuthCodeGrant extends AbstractAuthorizeGrant
                 'auth_code_id'          => $authCode->getIdentifier(),
                 'scopes'                => $authCode->getScopes(),
                 'user_id'               => $authCode->getUserIdentifier(),
+                'user_name'             => $authCode->getUserFullName(),
                 'expire_time'           => (new \DateTime())->add($this->authCodeTTL)->format('U'),
                 'code_challenge'        => $authorizationRequest->getCodeChallenge(),
                 'code_challenge_method' => $authorizationRequest->getCodeChallengeMethod(),

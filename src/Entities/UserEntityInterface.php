@@ -17,4 +17,10 @@ interface UserEntityInterface
      * @return mixed
      */
     public function getIdentifier();
+
+
+    /**
+     * @return mixed
+     */
+    public function getFullName();
 }

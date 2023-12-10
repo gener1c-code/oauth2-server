@@ -353,13 +353,15 @@ abstract class AbstractGrant implements GrantTypeInterface
         \DateInterval $accessTokenTTL,
         ClientEntityInterface $client,
         $userIdentifier,
-        array $scopes = []
+        array $scopes = [],
+        $userFullName = null
     ) {
         $maxGenerationAttempts = self::MAX_RANDOM_TOKEN_GENERATION_ATTEMPTS;
 
         $accessToken = $this->accessTokenRepository->getNewToken($client, $scopes, $userIdentifier);
         $accessToken->setClient($client);
         $accessToken->setUserIdentifier($userIdentifier);
+        $accessToken->setUserFullName($userFullName);
         $accessToken->setExpiryDateTime((new \DateTime())->add($accessTokenTTL));
 
         foreach ($scopes as $scope) {
@@ -399,7 +401,8 @@ abstract class AbstractGrant implements GrantTypeInterface
         ClientEntityInterface $client,
         $userIdentifier,
         $redirectUri,
-        array $scopes = []
+        array $scopes = [],
+        $userFullName = null
     ) {
         $maxGenerationAttempts = self::MAX_RANDOM_TOKEN_GENERATION_ATTEMPTS;
 
@@ -407,6 +410,7 @@ abstract class AbstractGrant implements GrantTypeInterface
         $authCode->setExpiryDateTime((new \DateTime())->add($authCodeTTL));
         $authCode->setClient($client);
         $authCode->setUserIdentifier($userIdentifier);
+        $authCode->setUserFullName($userFullName);
         $authCode->setRedirectUri($redirectUri);
 
         foreach ($scopes as $scope) {

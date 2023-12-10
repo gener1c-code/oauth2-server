@@ -56,7 +56,7 @@ class PasswordGrant extends AbstractGrant
         $finalizedScopes = $this->scopeRepository->finalizeScopes($scopes, $this->getIdentifier(), $client, $user->getIdentifier());
 
         // Issue and persist new tokens
-        $accessToken = $this->issueAccessToken($accessTokenTTL, $client, $user->getIdentifier(), $finalizedScopes);
+        $accessToken = $this->issueAccessToken($accessTokenTTL, $client, $user->getIdentifier(), $finalizedScopes, $user->getFullName());
         $refreshToken = $this->issueRefreshToken($accessToken);
 
         // Inject tokens into response

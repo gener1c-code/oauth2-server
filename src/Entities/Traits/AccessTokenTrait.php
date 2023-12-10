@@ -27,16 +27,22 @@ trait AccessTokenTrait
      */
     public function convertToJWT(CryptKey $privateKey)
     {
-        return (new Builder())
-            ->setAudience($this->getClient()->getIdentifier())
+
+        $builder = new Builder();
+        $builder->setAudience($this->getClient()->getIdentifier())
             ->setId($this->getIdentifier(), true)
             ->setIssuedAt(time())
             ->setNotBefore(time())
             ->setExpiration($this->getExpiryDateTime()->getTimestamp())
-            ->setSubject($this->getUserIdentifier())
-            ->set('scopes', $this->getScopes())
+            ->setSubject($this->getUserIdentifier());
+            if (!is_null($this->getUserFullName())) {
+                $builder->set('fullname', $this->getUserFullName());
+            }
+            $builder->set('scopes', $this->getScopes())
             ->sign(new Sha256(), new Key($privateKey->getKeyPath(), $privateKey->getPassPhrase()))
             ->getToken();
+
+        return $builder;
     }
 
     /**
@@ -53,6 +59,13 @@ trait AccessTokenTrait
      * @return string|int
      */
     abstract public function getUserIdentifier();
+
+
+    /**
+     * @return string|null
+     */
+    abstract public function getUserFullName(): ?string;
+
 
     /**
      * @return ScopeEntityInterface[]

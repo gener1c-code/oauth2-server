@@ -41,6 +41,7 @@ class BearerTokenResponse extends AbstractResponseType
                         'access_token_id'  => $this->accessToken->getIdentifier(),
                         'scopes'           => $this->accessToken->getScopes(),
                         'user_id'          => $this->accessToken->getUserIdentifier(),
+                        'user_name'        => $this->accessToken->getUserFullName(),
                         'expire_time'      => $this->refreshToken->getExpiryDateTime()->getTimestamp(),
                     ]
                 )

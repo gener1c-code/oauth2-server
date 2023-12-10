@@ -53,6 +53,18 @@ interface TokenInterface
      */
     public function getUserIdentifier();
 
+
+    /**
+     * @param string|null $fullName
+     * @return string
+     */
+    public function setUserFullName(?string $fullName);
+
+    /**
+     * @return string|null
+     */
+    public function getUserFullName();
+
     /**
      * Get the client that the token was issued to.
      *

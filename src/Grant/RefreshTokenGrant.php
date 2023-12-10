@@ -63,7 +63,7 @@ class RefreshTokenGrant extends AbstractGrant
         $this->refreshTokenRepository->revokeRefreshToken($oldRefreshToken['refresh_token_id']);
 
         // Issue and persist new tokens
-        $accessToken = $this->issueAccessToken($accessTokenTTL, $client, $oldRefreshToken['user_id'], $scopes);
+        $accessToken = $this->issueAccessToken($accessTokenTTL, $client, $oldRefreshToken['user_id'], $scopes, $oldRefreshToken['user_name']);
         $refreshToken = $this->issueRefreshToken($accessToken);
 
         // Inject tokens into response
