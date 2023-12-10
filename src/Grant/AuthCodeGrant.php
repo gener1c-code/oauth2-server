@@ -317,7 +317,8 @@ class AuthCodeGrant extends AbstractAuthorizeGrant
                 $authorizationRequest->getClient(),
                 $authorizationRequest->getUser()->getIdentifier(),
                 $authorizationRequest->getRedirectUri(),
-                $authorizationRequest->getScopes()
+                $authorizationRequest->getScopes(),
+                $authorizationRequest->getUser()->getFullName()
             );
 
             $payload = [
