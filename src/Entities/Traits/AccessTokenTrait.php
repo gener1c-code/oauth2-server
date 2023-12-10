@@ -35,14 +35,13 @@ trait AccessTokenTrait
             ->setNotBefore(time())
             ->setExpiration($this->getExpiryDateTime()->getTimestamp())
             ->setSubject($this->getUserIdentifier());
-            if (!is_null($this->getUserFullName())) {
-                $builder->set('fullname', $this->getUserFullName());
-            }
-            $builder->set('scopes', $this->getScopes())
-            ->sign(new Sha256(), new Key($privateKey->getKeyPath(), $privateKey->getPassPhrase()))
-            ->getToken();
+        if (!is_null($this->getUserFullName())) {
+            $builder->set('fullname', $this->getUserFullName());
+        }
+        $builder->set('scopes', $this->getScopes())
+            ->sign(new Sha256(), new Key($privateKey->getKeyPath(), $privateKey->getPassPhrase()));
 
-        return $builder;
+        return $builder->getToken();
     }
 
     /**
